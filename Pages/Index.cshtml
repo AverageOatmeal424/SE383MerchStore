@@ -1,0 +1,51 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Stock Manager";
+}
+
+<div class="text-center">
+    <h1>Untitled Merch Store</h1>
+    <h2>Stock Management</h2>
+
+    <table class="table table-bordered table-sm table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Item</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @* @if (Model == null)
+            {
+                <tr>
+                    <td colspan="7" class="text-center">No Data</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var p in Model.merch)
+                {
+                    <tr>
+                        <td>@p.Item_ID</td>
+                        <td>@p.ItemName</td>
+                        <td>@p.ItemDesc</td>
+                        <td>@p.ItemPrice</td>
+                        <td>@p.ItemQuantity</td>
+
+                        <td>Edit</td>
+                        <td>Delete</td>
+                    </tr>
+                }
+            } *@
+
+
+
+        </tbody>
+    </table>
+
+</div>
