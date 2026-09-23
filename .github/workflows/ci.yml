@@ -23,16 +23,16 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore
-        run: dotnet restore YourApp.sln
+        run: dotnet restore Storefront.sln
 
       - name: Build
-        run: dotnet build YourApp.sln -c Release --no-restore
+        run: dotnet build Storefront.sln -c Release --no-restore
 
-      - name: Test frontend
-        run: dotnet test frontend/Frontend.csproj -c Release --no-build --verbosity normal
-
-      - name: Test backend
-        run: dotnet test backend/Backend.csproj -c Release --no-build --verbosity normal
+      - name: Test frontend and backend
+        run: dotnet test Pages/AddItem.cshtml.cs -c Release --no-build --verbosity normal
+        run: dotnet test Pages/Error.cshtml.cs -c Release --no-build --verbosity normal
+        run: dotnet test Pages/Index.cshtml.cs -c Release --no-build --verbosity normal
+        run: dotnet test Pages/Privacy.cshtml.cs -c Release --no-build --verbosity normal
 
   container-tests:
     name: Build container test stages
@@ -43,20 +43,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Run frontend tests in image
+      - name: Run frontend and backend tests in image
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: frontend/Dockerfile
-          target: test
-          push: false
-          load: false
-
-      - name: Run backend tests in image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: backend/Dockerfile
+          file: Dockerfile
           target: test
           push: false
           load: false
