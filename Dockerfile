@@ -8,6 +8,9 @@ RUN dotnet restore "Storefront.csproj"
 COPY . .
 RUN dotnet build "Storefront.csproj" -c Release -o /app/build
 
+# Test stage
+FROM build AS test
+
 # Publish stage
 FROM build AS publish
 RUN dotnet publish "Storefront.csproj" -c Release -o /app/publish /p:UseAppHost=false
