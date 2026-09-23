@@ -76,3 +76,13 @@ jobs:
       - name: Tear down
         if: always()
         run: docker compose down -v
+  
+  #Deployment
+  deployment:
+      runs-on: ubuntu-latest
+      environment: production
+      steps:
+        - name: deploy
+          env:
+            API_KEY: ${{ secrets.API_KEY }}
+          run: echo "Running tests with staging secrets"
