@@ -1,0 +1,87 @@
+name: Build and test containers
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+env:
+  DOTNET_VERSION: "10.0.401"
+  MYSQL_ROOT_PASSWORD: BaKHQ5zr
+
+jobs:
+  unit-tests:
+    name: xUnit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore
+        run: dotnet restore YourApp.sln
+
+      - name: Build
+        run: dotnet build YourApp.sln -c Release --no-restore
+
+      - name: Test frontend
+        run: dotnet test frontend/Frontend.csproj -c Release --no-build --verbosity normal
+
+      - name: Test backend
+        run: dotnet test backend/Backend.csproj -c Release --no-build --verbosity normal
+
+  container-tests:
+    name: Build container test stages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run frontend tests in image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: frontend/Dockerfile
+          target: test
+          push: false
+          load: false
+
+      - name: Run backend tests in image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: backend/Dockerfile
+          target: test
+          push: false
+          load: false
+
+  compose-smoke:
+    name: Compose build and smoke
+    runs-on: ubuntu-latest
+    needs: [unit-tests, container-tests]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and start stack
+        run: docker compose up --build -d --wait
+
+      - name: Check backend
+        run: curl --fail --retry 10 --retry-delay 3 http://localhost:5080/health || curl --fail --retry 10 --retry-delay 3 http://localhost:5080/
+
+      - name: Check frontend
+        run: curl --fail --retry 10 --retry-delay 3 http://localhost:5081/
+
+      - name: Compose logs on failure
+        if: failure()
+        run: docker compose logs
+
+      - name: Tear down
+        if: always()
+        run: docker compose down -v
