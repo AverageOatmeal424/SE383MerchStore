@@ -54,7 +54,7 @@ jobs:
         with:
           context: .
           file: Dockerfile
-          target: StorefrontUnitTest.cs
+          target: test
           push: false
           load: false
 
