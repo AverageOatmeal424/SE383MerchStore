@@ -8,9 +8,9 @@ public class MerchModel
     [Key]
     public int Item_ID { get; set; }
 
-    public string ItemName { get; set; } = string.Empty;
+    public string ItemName { get; set; }
 
-    public string ItemDesc { get; set; } = string.Empty;
+    public string ItemDesc { get; set; }
 
     public string ItemPrice { get; set; }
 
