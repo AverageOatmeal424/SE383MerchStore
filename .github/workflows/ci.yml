@@ -29,16 +29,7 @@ jobs:
         run: dotnet build Storefront.sln -c Release --no-restore
 
       - name: Test item page
-        run: dotnet test Pages/AddItem.cshtml.cs -c Release --no-build --verbosity normal
-        
-      - name: Test error page
-        run: dotnet test Pages/Error.cshtml.cs -c Release --no-build --verbosity normal
-        
-      - name: Test index page
-        run: dotnet test Pages/Index.cshtml.cs -c Release --no-build --verbosity normal
-        
-      - name: Test privacy page
-        run: dotnet test Pages/Privacy.cshtml.cs -c Release --no-build --verbosity normal
+        run: dotnet test Storefront.csproj -c Release --no-build --verbosity normal
 
   container-tests:
     name: Build container test stages
