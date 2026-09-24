@@ -23,10 +23,10 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore
-        run: dotnet restore Storefront.sln
+        run: dotnet restore Storefront.slnx
 
       - name: Build
-        run: dotnet build Storefront.sln -c Release --no-restore
+        run: dotnet build Storefront.slnx -c Release --no-restore
 
       - name: Test item page
         run: dotnet test StorefrontUnitTest.csproj -c Release --no-build --verbosity normal
