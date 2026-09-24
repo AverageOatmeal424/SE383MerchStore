@@ -5,4 +5,4 @@ This project will be a website to keep track of merchandise on an online store.
 
 8+9/23/2026 Update: Multiple .yml files added to allow building, Docker files manually added as uploading from Visual Studio Code does not function correctly for now.
 
-9/23/2026 Update: Edit solely to trigger github action
+9/23/2026 Update: Edit solely to trigger github action twice
