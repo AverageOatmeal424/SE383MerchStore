@@ -15,4 +15,6 @@ public class MerchModel
     public string ItemPrice { get; set; }
 
     public string ItemQuantity { get; set; }
+
+    public string Feedback { get; set; }
 }
