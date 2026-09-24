@@ -29,7 +29,7 @@ jobs:
         run: dotnet build Storefront.sln -c Release --no-restore
 
       - name: Test item page
-        run: dotnet test Storefront.csproj -c Release --no-build --verbosity normal
+        run: dotnet test StorefrontUnitTest.csproj -c Release --no-build --verbosity normal
 
   container-tests:
     name: Build container test stages
