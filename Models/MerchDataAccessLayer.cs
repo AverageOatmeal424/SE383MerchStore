@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
-using System.Data.SqlClient;
 using Storefront.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
